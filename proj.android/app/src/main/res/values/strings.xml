@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">IronSource</string>
+    <string name="log_tag">Log:</string>
+    <string name="init">Init</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="showReward">ShowReward</string>
+    <string name="isRewardCapped">IsRewardCapped</string>
+    <string name="loadInstertitial">LoadInsterstitial</string>
+    <string name="showInstertitial">ShowInstertitial</string>
+    <string name="loadBanner">LoadBanner</string>
+    <string name="destoryBanner">DestoryBanner</string>
+    <string name="integrationCheck">IntegrationCheck</string>
+</resources>

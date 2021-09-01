@@ -1,0 +1,7 @@
+include ':app'
+include ':PluginIronSource'
+
+include ':Bridge'
+project(':Bridge').projectDir = new File(settingsDir, '../../sdkbox-bridge/proj.android/Bridge')
+
+rootProject.name = "IronSourceTest"
