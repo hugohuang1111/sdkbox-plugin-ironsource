@@ -6,83 +6,87 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/btns"
-        android:layout_width="0dp"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toTopOf="@+id/logtag"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/btnInit"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/init"
-            android:textAllCaps="false" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/start"
-            android:textAllCaps="false" />
+            <Button
+                android:id="@+id/btnInit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/init"
+                android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/btnInteTest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/integrationCheck"
-            android:textAllCaps="false" />
+            <Button
+                android:id="@+id/btnStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/start"
+                android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/btnShowReward"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/showReward"
-            android:textAllCaps="false" />
+            <Button
+                android:id="@+id/btnInteTest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/integrationCheck"
+                android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/btnIsRewardCapped"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/isRewardCapped"
-            android:textAllCaps="false" />
+            <Button
+                android:id="@+id/btnLoadBanner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loadBanner"
+                android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/btnLoadInterstitial"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loadInstertitial"
-            android:textAllCaps="false" />
+            <Button
+                android:id="@+id/btnDestoryBanner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/destoryBanner"
+                android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/btnShowIntesitial"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/showInstertitial"
-            android:textAllCaps="false" />
+            <Button
+                android:id="@+id/btnLoadInterstitial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loadInstertitial"
+                android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/btnLoadBanner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loadBanner"
-            android:textAllCaps="false" />
+            <Button
+                android:id="@+id/btnShowIntesitial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/showInstertitial"
+                android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/btnDestoryBanner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/destoryBanner"
-            android:textAllCaps="false" />
+            <Button
+                android:id="@+id/btnIsRewardCapped"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/isRewardCapped"
+                android:textAllCaps="false" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btnShowReward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/showReward"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/title"
