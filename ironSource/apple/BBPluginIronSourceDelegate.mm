@@ -140,6 +140,7 @@
 
 
 
+#pragma mark Interstitial Delegate
 // ISInterstitialDelegate
 
 /**
@@ -245,6 +246,7 @@
 
 
 
+#pragma mark Offerwall Delegate
 // ISOfferwallDelegate
 
 /**
@@ -359,16 +361,19 @@
 
 
 
+#pragma mark Banner Delegate
 // ISBannerDelegate
 
 /**
  Called after a banner ad has been successfully loaded
  */
-- (void)bannerDidLoad:(ISBannerView *)bannerView {
+- (void)bannerDidLoad:(ISBannerView *)v {
     if (nil == self.plugin) {
         return;
     }
 
+    self.plugin.bannerView = v;
+    [self.plugin showBanner];
     BBMsg* msg = [self.plugin createDefaultMsg];
     [msg.values addObject: @"onBannerAdLoaded"];
     [self.plugin send:msg];
@@ -442,6 +447,9 @@
     BBMsg* msg = [self.plugin createDefaultMsg];
     [msg.values addObject: @"onBannerAdLeftApplication"];
     [self.plugin send:msg];
+}
+
+- (void)bannerDidShow {
 }
 
 

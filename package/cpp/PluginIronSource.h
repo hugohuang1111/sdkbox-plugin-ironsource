@@ -42,7 +42,7 @@ namespace plugin {
                 const std::string& placement = "");
         static void showInterstitial(const std::string& placement = "");
 
-        static void loadBanner(const std::string& placement = "");
+        static void loadBanner(const std::string& alignment="", const std::string& placement="");
         static void destroyBanner();
 
         static void showOfferwall();

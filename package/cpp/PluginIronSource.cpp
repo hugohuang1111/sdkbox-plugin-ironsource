@@ -166,8 +166,9 @@ void IronSource::showInterstitial(const std::string& placement) {
     sdkbox::bb::Bridge::send(msg);
 }
 
-void IronSource::loadBanner(const std::string& placement) {
+void IronSource::loadBanner(const std::string& alignment, const std::string& placement) {
     sdkbox::bb::Msg msg = sdkbox::bb::Msg("IronSource", "loadBanner");
+    msg.pushValue(alignment);
     msg.pushValue(placement);
     sdkbox::bb::Bridge::send(msg);
 }

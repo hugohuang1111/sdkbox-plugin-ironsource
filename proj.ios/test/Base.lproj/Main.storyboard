@@ -108,18 +108,32 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="pfV-jq-uJM"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="d0t-a6-Iww"/>
                             </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="log:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m7V-yz-Mj8" userLabel="logArea">
+                                <rect key="frame" x="10" y="772" width="394" height="80"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="m7V-yz-Mj8" firstAttribute="top" secondItem="NMy-Zh-XEA" secondAttribute="bottom" constant="10" id="1fF-Ph-FuR"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="m7V-yz-Mj8" secondAttribute="bottom" constant="10" id="45h-Mu-Z5i"/>
                             <constraint firstItem="6aU-XM-lqo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="9bi-lA-6BH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="m7V-yz-Mj8" secondAttribute="trailing" constant="10" id="REE-ys-Ap8"/>
                             <constraint firstItem="NMy-Zh-XEA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="TF9-zG-UB7"/>
                             <constraint firstItem="NMy-Zh-XEA" firstAttribute="top" secondItem="6aU-XM-lqo" secondAttribute="bottom" constant="10" id="WLf-8a-LIV"/>
+                            <constraint firstItem="m7V-yz-Mj8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="YdH-Zu-ftU"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="m7V-yz-Mj8" secondAttribute="trailing" constant="10" id="aRv-ot-Sdx"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NMy-Zh-XEA" secondAttribute="trailing" id="dIA-95-Mb5"/>
                             <constraint firstItem="6aU-XM-lqo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lra-oT-lI8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="NMy-Zh-XEA" secondAttribute="bottom" constant="100" id="wOl-ms-XCc"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="logArea" destination="m7V-yz-Mj8" id="Ula-Is-1GR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

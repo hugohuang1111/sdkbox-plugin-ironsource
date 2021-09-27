@@ -9,6 +9,7 @@
 {
     BBPluginIronSourceDelegate* delegate;
     BBUNUserNotificationCenterDelegate* unDelegate;
+    NSString* bannerAlignment;
 }
 
 - (instancetype)init {
@@ -22,6 +23,7 @@
 
 - (void) dealloc {
     delegate = nil;
+    [self destroyBanner:nil];
 }
 
 - (void) launch: (BBMsg* _Nonnull) msg {
@@ -29,23 +31,28 @@
         return;
     }
     NSString* nss = [msg getValue:0];
+    [ISSupersonicAdsConfiguration configurations].useClientSideCallbacks = @(YES);
+
     [IronSource setRewardedVideoDelegate: delegate];
     [IronSource setInterstitialDelegate: delegate];
     [IronSource setOfferwallDelegate: delegate];
     [IronSource setSegmentDelegate: delegate];
+    [IronSource setBannerDelegate: delegate];
     [IronSource initWithAppKey: nss];
+    // [IronSource initWithAppKey: nss adUnits:@[IS_REWARDED_VIDEO, IS_INTERSTITIAL, IS_OFFERWALL, IS_BANNER]];
+    // [ISIntegrationHelper validateIntegration];
 
-    if (@available(iOS 10, *)) {
-        unDelegate = [[BBUNUserNotificationCenterDelegate alloc] init];
-        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-        center.delegate = unDelegate;
-        [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error) {
-        }];
-    } else {
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: UIUserNotificationTypeAlert | UIUserNotificationTypeSound | UIUserNotificationTypeBadge categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    }
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
+//    if (@available(iOS 10, *)) {
+//        unDelegate = [[BBUNUserNotificationCenterDelegate alloc] init];
+//        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+//        center.delegate = unDelegate;
+//        [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error) {
+//        }];
+//    } else {
+//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: UIUserNotificationTypeAlert | UIUserNotificationTypeSound | UIUserNotificationTypeBadge categories:nil];
+//        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+//    }
+//    [[UIApplication sharedApplication] registerForRemoteNotifications];
 }
 
 - (void) validateIntegration: (BBMsg* _Nonnull) msg {
@@ -207,7 +214,7 @@
     NSString* nss = [msg getValue:0];
     BOOL b = [IronSource isRewardedVideoCappedForPlacement: nss];
     [msg cleanValues];
-    [msg pushValueNumber: b ? [NSNumber numberWithInt:0] : [NSNumber numberWithInt:1]];
+    [msg pushValueNumber: b ? [NSNumber numberWithInt:1] : [NSNumber numberWithInt:0]];
     [self send: msg];
 }
 
@@ -226,7 +233,7 @@
 - (void) isInterstitialReady: (BBMsg* _Nonnull) msg {
     BOOL b = [IronSource hasInterstitial];
     [msg cleanValues];
-    [msg pushValueNumber: b ? [NSNumber numberWithInt:0] : [NSNumber numberWithInt:1]];
+    [msg pushValueNumber: b ? [NSNumber numberWithInt:1] : [NSNumber numberWithInt:0]];
     [self send: msg];
 }
 
@@ -237,7 +244,7 @@
     NSString* nss = [msg getValue:0];
     BOOL b = [IronSource isInterstitialCappedForPlacement:nss];
     [msg cleanValues];
-    [msg pushValueNumber: b ? [NSNumber numberWithInt:0] : [NSNumber numberWithInt:1]];
+    [msg pushValueNumber: b ? [NSNumber numberWithInt:1] : [NSNumber numberWithInt:0]];
     [self send: msg];
 }
 
@@ -246,11 +253,80 @@
 }
 
 - (void) loadBanner: (BBMsg* _Nonnull) msg {
-    [IronSource loadBannerWithViewController:[BBUtilsIOS getRootViewController] size:ISBannerSize_BANNER];
+    if (2 != [msg getValuesLength]) {
+        return;
+    }
+    NSString* alignment = [msg getValue:0];
+    // NSString* placement = [msg getValue:1];
+    bannerAlignment = alignment;
+    [IronSource loadBannerWithViewController: [BBUtilsIOS getRootViewController] size:ISBannerSize_SMART];
 }
 
 - (void) destroyBanner: (BBMsg* _Nonnull) msg {
-    [IronSource destroyBanner: nil];
+    if (nil == self.bannerView) {
+        return;
+    }
+    [self.bannerView removeFromSuperview];
+    [IronSource destroyBanner: self.bannerView];
+    self.bannerView = nil;
+}
+
+- (void) showBanner {
+    if (nil == self.bannerView) {
+        return;
+    }
+
+    NSString* alignment = bannerAlignment;
+    UIViewController* vc = [BBUtilsIOS getRootViewController];
+    UIView* bv = self.bannerView;
+    [vc.view addSubview: bv];
+    if (@available(ios 11.0, *)) {
+        do {
+            UILayoutGuide *guide = vc.view.safeAreaLayoutGuide;
+            if (!guide) break;
+
+            bv.translatesAutoresizingMaskIntoConstraints = NO;
+            NSMutableArray *constraints = [NSMutableArray array];
+
+            if (NSOrderedSame == [@"top" caseInsensitiveCompare: alignment]) {
+                [constraints addObject:[bv.centerXAnchor constraintEqualToAnchor:guide.centerXAnchor] ];
+                [constraints addObject:[bv.topAnchor constraintEqualToAnchor:guide.topAnchor] ];
+            } else if (NSOrderedSame == [@"bottom" caseInsensitiveCompare: alignment]) {
+                [constraints addObject:[bv.centerXAnchor constraintEqualToAnchor:guide.centerXAnchor] ];
+                [constraints addObject:[bv.bottomAnchor constraintEqualToAnchor:guide.bottomAnchor] ];
+            } else if (NSOrderedSame == [@"left" caseInsensitiveCompare: alignment]) {
+                [constraints addObject:[bv.centerYAnchor constraintEqualToAnchor:guide.centerYAnchor] ];
+                [constraints addObject:[bv.leftAnchor constraintEqualToAnchor:guide.leftAnchor] ];
+            } else if (NSOrderedSame == [@"right" caseInsensitiveCompare: alignment]) {
+                [constraints addObject:[bv.centerYAnchor constraintEqualToAnchor:guide.centerYAnchor] ];
+                [constraints addObject:[bv.rightAnchor constraintEqualToAnchor:guide.rightAnchor] ];
+            } else if (NSOrderedSame == [@"center" caseInsensitiveCompare: alignment]) {
+                [constraints addObject:[bv.centerYAnchor constraintEqualToAnchor:guide.centerYAnchor] ];
+                [constraints addObject:[bv.centerXAnchor constraintEqualToAnchor:guide.centerXAnchor] ];
+            } else if (NSOrderedSame == [@"top_left" caseInsensitiveCompare: alignment]
+                       || NSOrderedSame == [@"left_top" caseInsensitiveCompare: alignment]) {
+                [constraints addObject:[bv.leftAnchor constraintEqualToAnchor:guide.leftAnchor] ];
+                [constraints addObject:[bv.topAnchor constraintEqualToAnchor:guide.topAnchor] ];
+            } else if (NSOrderedSame == [@"top_right" caseInsensitiveCompare: alignment]
+                       || NSOrderedSame == [@"right_top" caseInsensitiveCompare: alignment]) {
+                [constraints addObject:[bv.rightAnchor constraintEqualToAnchor:guide.rightAnchor] ];
+                [constraints addObject:[bv.topAnchor constraintEqualToAnchor:guide.topAnchor] ];
+            } else if (NSOrderedSame == [@"bottom_left" caseInsensitiveCompare: alignment]
+                       || NSOrderedSame == [@"left_bottom" caseInsensitiveCompare: alignment]) {
+                [constraints addObject:[bv.leftAnchor constraintEqualToAnchor:guide.leftAnchor] ];
+                [constraints addObject:[bv.bottomAnchor constraintEqualToAnchor:guide.bottomAnchor] ];
+            } else if (NSOrderedSame == [@"bottom_right" caseInsensitiveCompare: alignment]
+                       || NSOrderedSame == [@"right_bottom" caseInsensitiveCompare: alignment]) {
+                [constraints addObject:[bv.rightAnchor constraintEqualToAnchor:guide.rightAnchor] ];
+                [constraints addObject:[bv.bottomAnchor constraintEqualToAnchor:guide.bottomAnchor] ];
+            } else {
+                [constraints addObject:[bv.centerXAnchor constraintEqualToAnchor:guide.centerXAnchor] ];
+                [constraints addObject:[bv.topAnchor constraintEqualToAnchor:guide.topAnchor] ];
+            }
+
+            [NSLayoutConstraint activateConstraints:constraints];
+        } while (0);
+    }
 }
 
 - (void) showOfferwall: (BBMsg* _Nonnull) msg {

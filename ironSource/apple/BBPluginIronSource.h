@@ -5,6 +5,8 @@
 
 @interface BBPluginIronSource : BBPluginBase
 
+@property (nonatomic, strong) ISBannerView *bannerView;
+
 - (void) launch: (BBMsg* _Nonnull) msg;
 - (void) validateIntegration: (BBMsg* _Nonnull) msg;
 - (void) setConsent: (BBMsg* _Nonnull) msg;
@@ -28,6 +30,8 @@
 - (void) showOfferwall: (BBMsg* _Nonnull) msg;
 - (void) getOfferwallCredits: (BBMsg* _Nonnull) msg;
 - (void) setClientSideCallbacks: (BBMsg* _Nonnull) msg;
+
+- (void) showBanner;
 
 @end
 

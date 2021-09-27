@@ -5,6 +5,12 @@
 
 @interface ViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *logArea;
+
+@property NSMutableArray* logLines;
+
+- (void) log:(NSString*)s;
+
 @end
 
 @implementation ViewController
@@ -13,11 +19,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
-    sdkbox::bb::plugin::IronSource::setListener([](const std::string& evt, const std::string& json) {
+    self.logLines = [[NSMutableArray alloc] initWithCapacity:10];
+    sdkbox::bb::plugin::IronSource::setListener([self](const std::string& evt, const std::string& json) {
         NSString* nss = [NSString stringWithUTF8String: evt.c_str()];
         NSString* nsJson = [NSString stringWithUTF8String: json.c_str()];
         NSLog(@"IS evt:%@ json:%@", nss, nsJson);
+        [self log:nss];
     });
+}
+
+- (void) log:(NSString*)s {
+    [self.logLines addObject:s];
+    while (self.logLines.count > 5) {
+        [self.logLines removeObjectAtIndex:0];
+    }
+
+    self.logArea.text = [self.logLines componentsJoinedByString:@"\n"];
 }
 
 - (IBAction)onBtnInit:(id)sender {
@@ -40,8 +57,8 @@
     sdkbox::bb::plugin::IronSource::getOfferwallCredits();
     sdkbox::bb::plugin::IronSource::setClientSideCallbacks(true);
 
-    // "10b5adc55"
-    sdkbox::bb::plugin::IronSource::launch("10b5adc55");
+    // "11324e71d"
+    sdkbox::bb::plugin::IronSource::launch("11324e71d");
 }
 
 - (IBAction)onBtnIntegrationCheck:(id)sender {
@@ -79,7 +96,7 @@
     NSLog(@"IS btn reward capped");
     sdkbox::bb::plugin::IronSource::isRewardedVideoPlacementCapped([](bool b) {
         if (!b) {
-            NSLog(@"IS Rewarded capped: %d", b);
+            NSLog(@"IS Rewarded capped: %@", 0 == b ? @"no" : @"yes");
             return;
         }
     }, "");
