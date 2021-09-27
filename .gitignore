@@ -1,0 +1,18 @@
+
+.DS_Store
+
+/Bridge/
+Bridge.zip
+
+package/android/
+package/ios/
+
+# proj.android/PluginIronSource/jni/bridge/
+proj.ios/Bridge.xcframework/
+proj.ios/Distribution/DynamicFramework/
+
+# *.zip
+
+ironSource/depedencies/apple/*.framework/
+
+
