@@ -1,0 +1,12 @@
+{
+    "name": "patch build gradle",
+    "file": "proj.android/app/build.gradle",
+    "patches": [
+        {
+            "check": "com.ironsource.sdk:mediationsdk",
+            "content": "dependencies { implementation 'com.ironsource.sdk:mediationsdk:7.1.9' }",
+            "anchor": "dependencies",
+            "anchorPos": -1
+        }
+    ]
+}

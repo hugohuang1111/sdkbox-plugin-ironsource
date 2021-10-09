@@ -11,7 +11,7 @@ BBPluginIronSource.init = function() {
     sdkbox.bb.Bridge.init();
 
     if (BBPluginIronSource._isAndroid()) {
-        sdkbox.bb.Bridge.addPlugin("IronSource", "com.sdkbox.bb.bridge.plugin.IronSource.PluginIronSource");
+        sdkbox.bb.Bridge.addPlugin("IronSource", "com.sdkbox.bb.bridge.plugin.ironsource.PluginIronSource");
     } else if (BBPluginIronSource._isIOS()) {
         sdkbox.bb.Bridge.addPlugin("IronSource", "BBPluginIronSource");
     }
