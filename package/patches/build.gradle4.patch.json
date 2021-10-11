@@ -3,6 +3,7 @@
     "file": "native/engine/android/build.gradle",
     "patches": [
         {
+            "enableTag": "allprojects",
             "check": "android-sdk.is.com",
             "content": "maven { url 'https://android-sdk.is.com/' }",
             "anchor": "jcenter()",
