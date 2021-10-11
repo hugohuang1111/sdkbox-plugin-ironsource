@@ -1,0 +1,27 @@
+{
+    "version": "0.0.1",
+    "name": "ironsource",
+    "author": "hugo",
+    "organization": "SDKBox",
+    "description": "sdkbox plugin for IronSource",
+    "libraries": {
+        "android": {
+            "deps": [
+                "implementation 'com.ironsource.sdk:mediationsdk:7.1.9'"
+            ],
+            "plugin": {
+                "name": "IronSource",
+                "class": "com.sdkbox.bb.bridge.plugin.ironsource.PluginIronSource"
+            }
+        },
+        "ios": {
+            "plugin": {
+                "name": "IronSource",
+                "class": "BBPluginIronSource"
+            }
+        }
+    },
+    "dependencies": {
+        "Bridge": "0.0.15"
+    }
+}
