@@ -364,7 +364,6 @@ public class PluginIronSource extends PluginBase implements Application.Activity
     }
 
     public void validateIntegration(Msg msg) {
-        Log.d(TAG, "validateIntegration: entry");
         Activity act = this.getActivity();
         if (null == act) {
             return;

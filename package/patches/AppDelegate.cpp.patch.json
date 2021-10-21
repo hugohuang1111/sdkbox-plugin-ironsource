@@ -1,0 +1,19 @@
+{
+    "name": "patch lua binding",
+    "file": "frameworks/runtime-src/Classes/AppDelegate.cpp",
+    "script": "lua",
+    "patches": [
+        {
+            "check": "BridgeLuaHelper",
+            "content": "#include \"./BridgeLuaHelper.h\"",
+            "anchor": "using namespace std;",
+            "anchorPos": 1
+        },
+        {
+            "check": "register_Bridge_module",
+            "content": "register_Bridge_module(L);",
+            "anchor": "lua_module_register",
+            "anchorPos": 1
+        }
+    ]
+}
